@@ -25,17 +25,18 @@ jobs:
       - store_artifacts:
           path: ~/project/target/web
           destination: w
+
   releaser:
     executor: rust-executor
     steps:
       - run:
-        name: Install Butler
-        command: |
-          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
-          unzip butler.zip
-          chmod +x butler
-          ./butler -V
-      
+          name: Install Butler
+          command: |
+            curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+            unzip butler.zip
+            chmod +x butler
+            ./butler -V
+            
 workflows:
   version: 2
   build:
