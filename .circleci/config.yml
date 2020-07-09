@@ -32,9 +32,9 @@ jobs:
             unzip butler.zip
             chmod +x butler
             ./butler -V
-     - run:
-         name: Push to Itch.io
-         command: ./butler push ~/project/target/web ThermalSpan/demo-072020:tot
+      - run:
+          name: Push to Itch.io
+          command: ./butler push ~/project/target/web ThermalSpan/demo-072020:tot
 
 workflows:
   version: 2
