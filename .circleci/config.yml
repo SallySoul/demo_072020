@@ -28,7 +28,7 @@ jobs:
   releaser:
     executor: rust-executor
     steps:
-      -run:
+      - run:
         name: Install Butler
         command: |
           curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
