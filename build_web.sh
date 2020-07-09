@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/bash
 
 rm -rf target/web
 mkdir -p target/web
