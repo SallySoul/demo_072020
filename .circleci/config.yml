@@ -24,10 +24,21 @@ jobs:
           command: ./build_web.sh
       - store_artifacts:
           path: ~/project/target/web
-          destination: web 
+          destination: web
+
+  releaser:
+    steps:
+      -run:
+        name: Install Butler
+        command: |
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          ./butler -V
       
 workflows:
   version: 2
   build:
     jobs:
       - build-web
+      - releaser
