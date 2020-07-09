@@ -23,7 +23,7 @@ jobs:
           name: build web 
           command: ./build_web.sh
       - store_artifacts:
-          path: ~/repo/project/web
+          path: ~/project/target/web
           destination: web 
       
 workflows:
