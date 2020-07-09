@@ -6,6 +6,10 @@ fn to_mq_color(c: &[f32; 4]) -> mq::Color {
     mq::Color::new(c[0], c[1], c[2], c[3])
 }
 
+fn color_from_u32(c: u32) -> [f32; 4] {
+    megaui::Color::from_rgb_u32(c).into()
+}
+
 #[macroquad::main("TechDemo")]
 async fn main() {
     let noise = OpenSimplex::new();
@@ -26,9 +30,10 @@ async fn main() {
     let mut current_time_sim = get_time();
 
     // color Settings
-    let mut background_color = [0.3, 0.89, 0.56, 1.0f32];
-    let mut border_color = [0.04, 0.13, 0.7, 1.0f32];
-    let mut inner_color = [0.6, 0.8, 0.03, 1.0f32];
+    // https://coolors.co/efd9ce-dec0f1-b79ced-957fef-7161ef
+    let mut background_color = color_from_u32(0xEFD9CE);
+    let mut border_color = color_from_u32(0xDEC0F1);
+    let mut inner_color = color_from_u32(0xB79CED);
 
     loop {
         if is_key_down(KeyCode::Escape) {
@@ -56,7 +61,11 @@ async fn main() {
                 * width_min
                 * noise_coefficient
                 * noise
-                    .get([current_time_sim, (angle_noise_coefficient * angle) as f64])
+                    .get([
+                        current_time_sim,
+                        (angle_noise_coefficient * angle.cos()) as f64,
+                        (angle_noise_coefficient * angle.sin()) as f64,
+                    ])
                     .abs() as f32
                 + inner_proportion * width_max;
 

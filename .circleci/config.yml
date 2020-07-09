@@ -25,10 +25,6 @@ jobs:
       - store_artifacts:
           path: ~/project/target/web
           destination: w
-
-  releaser:
-    executor: rust-executor
-    steps:
       - run:
           name: Install Butler
           command: |
@@ -36,10 +32,12 @@ jobs:
             unzip butler.zip
             chmod +x butler
             ./butler -V
-            
+     - run:
+         name: Push to Itch.io
+         command: ./butler push ~/project/target/web ThermalSpan/demo-072020:tot
+
 workflows:
   version: 2
   build:
     jobs:
       - build-web
-      - releaser
