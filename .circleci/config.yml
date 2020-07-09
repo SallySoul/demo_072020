@@ -22,6 +22,9 @@ jobs:
       - run:
           name: build web 
           command: ./build_web.sh
+      - store_artifacts:
+          path: ~/repo/target/web
+          destination: web 
       
 workflows:
   version: 2
