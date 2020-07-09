@@ -1,41 +1,17 @@
 version: 2.1
-
-executors:
-  rust-executor:
-    docker:
-      - image: rust:latest
-
+orbs:
+  node: circleci/node@1.1.6
 jobs:
-  checkout:
-    executor: rust-executor
+  build-and-test:
+    executor:
+      name: node/default
     steps:
       - checkout
-
-  checkfmt:
-    executor: rust-executor
-    steps:
-      - run:
-          name: install rustfmt
-          command: rustup component add rustfmt
-      - run:
-          name: check formatting
-          command: cargo fmt -- --check
-
-  build-web:
-    executor: rust-executor
-    steps:
-      - run:
-          name: build web 
-          command: ./build_web.sh
-      
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run: npm test
 workflows:
-  version: 2
-  build:
-    jobs:
-      - checkout
-      - check-fmt:
-          requires:
-            - checkout
-      - build-wasm:
-          require:
-            - checkout
+    build-and-test:
+      jobs:
+        - build-and-test
