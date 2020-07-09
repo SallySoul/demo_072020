@@ -34,6 +34,11 @@ async fn main() {
     let mut background_color = color_from_u32(0xEFD9CE);
     let mut border_color = color_from_u32(0xDEC0F1);
     let mut inner_color = color_from_u32(0xB79CED);
+    let mut outer_color = {
+        let mut result = color_from_u32(0x957FEF);
+        result[3] = 0.0;
+        result
+    };
 
     loop {
         if is_key_down(KeyCode::Escape) {
@@ -81,6 +86,15 @@ async fn main() {
                 screen_center.y(),
                 6.0,
                 to_mq_color(&inner_color),
+            );
+
+            draw_line(
+                cx,
+                cy,
+                angle.sin() * width_max + screen_center.x(),
+                angle.cos() * width_max + screen_center.y(),
+                6.0,
+                to_mq_color(&outer_color),
             );
 
             if i > 0 {
@@ -179,6 +193,13 @@ async fn main() {
                         ui.slider(hash!(), "[G]", 0.0f32..1.0, &mut inner_color[1]);
                         ui.slider(hash!(), "[B]", 0.0f32..1.0, &mut inner_color[2]);
                         ui.slider(hash!(), "[A]", 0.0f32..1.0, &mut inner_color[3]);
+                    });
+
+                    ui.tree_node(hash!(), "Outer Color", |ui| {
+                        ui.slider(hash!(), "[R]", 0.0f32..1.0, &mut outer_color[0]);
+                        ui.slider(hash!(), "[G]", 0.0f32..1.0, &mut outer_color[1]);
+                        ui.slider(hash!(), "[B]", 0.0f32..1.0, &mut outer_color[2]);
+                        ui.slider(hash!(), "[A]", 0.0f32..1.0, &mut outer_color[3]);
                     });
                 });
             },
