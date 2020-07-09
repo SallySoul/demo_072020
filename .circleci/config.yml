@@ -6,24 +6,16 @@ executors:
       - image: rust:latest
 
 jobs:
-  checkout:
+  build-web:
     executor: rust-executor
     steps:
       - checkout
-
-  check-fmt:
-    executor: rust-executor
-    steps:
       - run:
           name: install rustfmt
           command: rustup component add rustfmt
       - run:
           name: check formatting
           command: cargo fmt -- --check
-
-  build-web:
-    executor: rust-executor
-    steps:
       - run:
           name: build web 
           command: ./build_web.sh
@@ -32,10 +24,4 @@ workflows:
   version: 2
   build:
     jobs:
-      - checkout
-      - check-fmt:
-          requires:
-            - checkout
       - build-web:
-          requires:
-            - checkout
