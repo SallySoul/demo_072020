@@ -24,9 +24,9 @@ jobs:
           command: ./build_web.sh
       - store_artifacts:
           path: ~/project/target/web
-          destination: web
-
+          destination: w
   releaser:
+    executor: rust-executor
     steps:
       -run:
         name: Install Butler
