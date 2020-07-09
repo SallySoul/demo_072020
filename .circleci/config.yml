@@ -22,11 +22,8 @@ jobs:
       - run:
           name: build web 
           command: ./build_web.sh
-      - run:
-          name: explore
-          command: pwd; ls; echo "~/repo"; ls ~/repo; echo "~/repo/target"; ls ~/repo/target
       - store_artifacts:
-          path: ~/repo/target/web
+          path: ~/repo/project/web
           destination: web 
       
 workflows:
