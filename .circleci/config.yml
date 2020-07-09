@@ -6,6 +6,13 @@ executors:
       - image: rust:latest
 
 jobs:
+  explore:
+    executor: rust-executor
+    steps:
+      - run:
+          name: T
+          command: ls ~/project
+
   build-web:
     executor: rust-executor
     steps:
@@ -41,3 +48,6 @@ workflows:
   build:
     jobs:
       - build-web
+      - explore:
+          requires:
+            build_web
