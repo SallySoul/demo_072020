@@ -1,6 +1,6 @@
 use macroquad::{self as mq, *};
-use noise::{NoiseFn, OpenSimplex};
 use megaui::Id;
+use noise::{NoiseFn, OpenSimplex};
 
 fn to_mq_color(c: &[f32; 4]) -> mq::Color {
     mq::Color::new(c[0], c[1], c[2], c[3])
@@ -65,7 +65,7 @@ impl NoiseCircle {
                 let mut result = color_from_u32(0x957FEF);
                 result[3] = 0.0;
                 result
-            }
+            },
         }
     }
 
@@ -90,7 +90,8 @@ impl NoiseCircle {
             let distance = self.outer_proportion
                 * width_min
                 * self.noise_coefficient
-                * self.noise
+                * self
+                    .noise
                     .get([
                         self.current_time_sim,
                         (self.angle_noise_coefficient * angle.cos()) as f64,
@@ -153,7 +154,12 @@ impl NoiseCircle {
             |ui| {
                 ui.tree_node(hash!(), "Coefficients", |ui| {
                     // segments
-                    ui.slider(hash!(), "[10 .. 200]", 10f32..200f32, &mut self.segments_f32);
+                    ui.slider(
+                        hash!(),
+                        "[10 .. 200]",
+                        10f32..200f32,
+                        &mut self.segments_f32,
+                    );
                     self.segments = self.segments_f32.ceil() as usize;
                     ui.label(None, &format!(" ^ segments {}", self.segments));
                     ui.separator();
@@ -179,12 +185,22 @@ impl NoiseCircle {
                     ui.separator();
 
                     // scaling_coefficient
-                    ui.slider(hash!(), "[0 .. 1]", 0f32..1.0, &mut self.scaling_coefficient);
+                    ui.slider(
+                        hash!(),
+                        "[0 .. 1]",
+                        0f32..1.0,
+                        &mut self.scaling_coefficient,
+                    );
                     ui.label(None, &format!(" ^ Scaling Coefficient"));
                     ui.separator();
 
                     // sim_time_velocity
-                    ui.slider(hash!(), "[-1 .. 1]", -3.0f32..3.0, &mut self.sim_time_velocity);
+                    ui.slider(
+                        hash!(),
+                        "[-1 .. 1]",
+                        -3.0f32..3.0,
+                        &mut self.sim_time_velocity,
+                    );
                     ui.label(None, &format!(" ^ Simulation Time Velocity"));
                     ui.separator();
 

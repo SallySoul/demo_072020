@@ -4,17 +4,17 @@ mod noise_circle;
 
 enum GameState {
     MainMenu(MainMenu),
-    NoiseCircle(noise_circle::NoiseCircle)
+    NoiseCircle(noise_circle::NoiseCircle),
 }
 
-struct MainMenu {
-}
+struct MainMenu {}
 
 impl MainMenu {
-    pub fn new() -> MainMenu { return MainMenu {}; }
-
-    pub fn update(&self) {
+    pub fn new() -> MainMenu {
+        return MainMenu {};
     }
+
+    pub fn update(&self) {}
 }
 
 #[macroquad::main("TechDemo")]
